@@ -20,13 +20,17 @@ echo 'export function onRequest() {
 # make the public dir and favicon
 mkdir public
 curl -o public/favicon.ico https://reactrouter.com/favicon.ico
+echo '{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": ["/favicon.ico"]
+}' > public/_routes.json
 
 # create a wrangler.toml
 touch wrangler.toml
 echo 'name = "my-cf-app"
 compatibility_date = "2024-06-11"
 pages_build_output_dir = "./public"
-'
 ```
 
 ## Connect to GitHub
