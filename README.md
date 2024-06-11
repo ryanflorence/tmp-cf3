@@ -52,3 +52,93 @@ Done!
 Now make changes and push to GitHub
 
 ## Add a D1 Database
+
+👉 Create a database
+
+```
+wrangler d1 create my-cf-app-db
+```
+
+👉 Bind it to your project
+
+Copy/paste the toml from the previous command, it'll look like this:
+
+```
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "my-cf-app-db"
+database_id = "<some id>"
+```
+
+👉 Create a migration
+
+```sh
+wrangler d1 migrations create my-cf-app-db schema
+```
+
+👉 Write out the DB schema you want
+
+```sql
+DROP TABLE IF EXISTS Customers;
+
+CREATE TABLE
+  IF NOT EXISTS Customers (
+    CustomerId INTEGER PRIMARY KEY,
+    CompanyName TEXT,
+    ContactName TEXT
+  );
+
+INSERT INTO
+  Customers (CustomerID, CompanyName, ContactName)
+VALUES
+  (1, 'Alfreds Futterkiste', 'Maria Anders'),
+  (4, 'Around the Horn', 'Thomas Hardy'),
+  (11, 'Bs Beverages', 'Victoria Ashworth'),
+  (13, 'Bs Beverages', 'Random Name');
+```
+
+### Local D1 Development
+
+👉 Run the migration locally
+
+```sh
+wrangler d1 migrations apply my-cf-app-db --local
+```
+
+👉 Run a query:
+
+```sh
+wrangler d1 execute my-cf-app-db --local --command="SELECT * FROM Customers"
+```
+
+👉 Query in your function
+
+```js
+export async function onRequest(context) {
+  let customers = await context.env.DB.prepare("SELECT * FROM Customers").all();
+  return Response.json(customers);
+}
+```
+
+### D1 Deployment
+
+Apply the migrations to the actual database, same as before, but without the `--local` flag.
+
+TODO: Put this in a GitHub action?
+
+```sh
+wrangler d1 migrations apply my-cf-app-db
+```
+
+Verify the migration was applied
+
+```sh
+wrangler d1 execute my-cf-app-db --command="SELECT * FROM Customers"
+```
+
+Deploy by pushing to GitHub
+
+```
+git add . -m "adds D1 database"
+git push origin main
+```

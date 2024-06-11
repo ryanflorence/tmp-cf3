@@ -1,3 +1,4 @@
-export function onRequest() {
-  return new Response("Hello, cf3, let's go!!");
+export async function onRequest(context) {
+  let customers = await context.env.DB.prepare("SELECT * FROM Customers").all();
+  return Response.json(customers);
 }

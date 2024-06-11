@@ -1,3 +1,8 @@
 name = "tmp-cf3"
 compatibility_date = "2024-06-11"
 pages_build_output_dir = "./public"
+
+[[d1_databases]]
+binding = "DB"                                       # i.e. available in your Worker on env.DB
+database_name = "my-cf-app-db"
+database_id = "75dcd94d-f348-41cc-91fa-1a47a04d750d"
