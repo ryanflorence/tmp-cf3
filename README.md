@@ -35,4 +35,8 @@ wrangler pages deploy
 wrangler pages dev
 ```
 
+## Connect to GitHub
+
+[Create a new repo with repo.new](https://repo.new)
+
 ## Add a D1 Database
