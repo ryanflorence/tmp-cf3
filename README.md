@@ -122,18 +122,18 @@ export async function onRequest(context) {
 
 ### D1 Deployment
 
-Apply the migrations to the actual database, same as before, but without the `--local` flag.
+Apply the migrations to the actual database, same as before, but without the `--remote` flag.
 
 TODO: Put this in a GitHub action?
 
 ```sh
-wrangler d1 migrations apply my-cf-app-db
+wrangler d1 migrations apply my-cf-app-db --remote
 ```
 
 Verify the migration was applied
 
 ```sh
-wrangler d1 execute my-cf-app-db --command="SELECT * FROM Customers"
+wrangler d1 execute my-cf-app-db --remote --command="SELECT * FROM Customers"
 ```
 
 Deploy by pushing to GitHub
