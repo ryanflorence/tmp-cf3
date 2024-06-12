@@ -45,3 +45,54 @@ wrangler pages dev
 ```
 
 ## Deploy with GitHub Action
+
+👉 Create a Cloudflare token
+
+1. Go to your [profile tokens page](https://dash.cloudflare.com/profile/api-tokens)
+2. Click "Create Token"
+3. Select "Edit Cloudflare Workers" template
+4. Copy the token
+
+👉 Add the token to your GitHub repo
+
+1. Go to your repo action secrets page: https://github.com/[user]/[repo]/settings/secrets/actions
+2. Click "New repository secret"
+3. Paste your secret first so you don't lose it from your clipboard
+4. Name it `CLOUDFLARE_API_TOKEN`
+
+👉 Add the GitHub Action
+
+```sh
+mkdir -p .github/workflows
+touch .github/workflows/deploy.yml
+```
+
+👉 Paste this into deploy.yml
+
+```yml
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+```
+
+Now your site will deploy on every push to main.
+
+👉 Make a change to your function's response and push
+
+```sh
+git push origin main
+```
