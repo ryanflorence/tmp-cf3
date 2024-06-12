@@ -3,21 +3,21 @@
 ## Getting started
 
 ```sh
-# make the project
+# 👉 make the project
 mkdir my-cf-app
 cd my-cf-app
 
-# setup deps
+# 👉 setup deps
 npm init -y
 npm i -D wrangler
 
-# create a hello world function
+# 👉 create a hello world function
 mkdir functions
 echo 'export function onRequest() {
   return new Response("Hello, cf3!")
 }' > functions/path.js
 
-# make the public dir and favicon
+# 👉 make the public dir and favicon
 mkdir public
 curl -o public/favicon.ico https://reactrouter.com/favicon.ico
 echo '{
@@ -26,7 +26,7 @@ echo '{
   "exclude": ["/favicon.ico"]
 }' > public/_routes.json
 
-# create a wrangler.toml
+# 👉 create a wrangler.toml
 touch wrangler.toml
 echo 'name = "my-cf-app"
 compatibility_date = "2024-06-11"
@@ -126,7 +126,7 @@ export async function onRequest(context) {
 
 ### D1 Deployment
 
-Apply the migrations to the actual database, same as before, but without the `--remote` flag.
+👉 Apply the migrations to the actual database, same as before, but with the `--remote` flag.
 
 TODO: Put this in a GitHub action?
 
@@ -134,13 +134,13 @@ TODO: Put this in a GitHub action?
 wrangler d1 migrations apply my-cf-app-db --remote
 ```
 
-Verify the migration was applied
+👉 Verify the migration was applied
 
 ```sh
 wrangler d1 execute my-cf-app-db --remote --command="SELECT * FROM Customers"
 ```
 
-Deploy by pushing to GitHub
+👉 Deploy by pushing to GitHub
 
 ```
 git add . -m "adds D1 database"
