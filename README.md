@@ -96,3 +96,5 @@ Now your site will deploy on every push to main.
 ```sh
 git push origin main
 ```
+
+Now open https://github.com/[user]/[repo]/actions to verify the action is running.
